@@ -1,0 +1,76 @@
+
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset='utf8'>
+    <title>FLASH</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            padding: 0;
+        }
+        .playBtn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            background-color: #FF42A5;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            border-radius: 8px;
+            font-size: 24px;
+            padding: 6px 12px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+    <link rel="icon" href="https://cdn.now.gg/apps-content/common/img/favicon.ico" sizes="32x32">
+</head>
+
+<body>
+    <div>
+        <button id="playBtn" class="playBtn">Play</button>
+    </div>
+    <div id='ruffle'></div>
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    <script>
+            document.getElementById("playBtn").addEventListener("click", function () {
+
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const url = urlParams.get('swf');
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+
+                var ruffle = window.RufflePlayer.newest(),
+                    player = Object.assign(document.getElementById('ruffle').appendChild(ruffle.createPlayer()), {
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                        style: 'width: 100vw; height: 100vh;',
+                        autoplay: 'on',
+                        unmuteOverlay: 'hidden',
+                        backgroundColor: '#FF3392',
+                        contextMenu: 'off',
+                        upgradeToHttps: true,
+                        menu: false,
+                    });
+
+                player.load({ url: url });
+                this.classList.add('hide');
+            });
+
+    </script>
+    </body>
+
+    </html>

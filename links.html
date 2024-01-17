@@ -1,0 +1,142 @@
+
+ 
+
+        <!DOCTYPE html>
+        <html>
+          <head>
+
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width">
+            <style>
+
+
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,400i,700);
+
+body {
+margin: 0;
+padding: 0;
+background: #02006e;
+font-family: ubuntu;
+}
+
+header {
+display: flex;
+align-items: center;
+background: #e7e7ff;
+}
+
+header img {
+width: 50px;
+background: white;
+border-radius: 5px;
+margin: 0 20px 0 40px;
+}
+
+
+hr, article .date {
+color: #a0a0a0;
+}
+
+            /* Popup container - can be anything you want */
+.popup {
+position: relative;
+display: inline-block;
+cursor: pointer;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+visibility: hidden;
+width: 160px;
+background-color: #555;
+color: #fff;
+text-align: center;
+border-radius: 6px;
+padding: 8px 0;
+position: absolute;
+z-index: 1;
+bottom: 125%;
+left: 50%;
+margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+content: "";
+position: absolute;
+top: 100%;
+left: 50%;
+margin-left: -5px;
+border-width: 5px;
+border-style: solid;
+border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+visibility: visible;
+-webkit-animation: fadeIn 1s;
+animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+from {opacity: 0;} 
+to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+from {opacity: 0;}
+to {opacity:1 ;}
+}
+            </style>
+            <script src="/login.js"></script>
+            <script src="/sw.js"></script>
+            <script src="https://kit.fontawesome.com/a196bf9967.js" crossorigin="anonymous"></script>
+          </head>
+          <body>
+            <main>
+      <article style="background: white;
+        border: 3px solid #a0a0a0;
+        width: 90%;
+        margin: 20px auto;
+        border-radius: 10px;
+        padding: 10px;">
+        <h3>LINK DUMP</h3>
+        <h4 style="color: black">Admin</h4>
+        <hr />
+        <p>Link Dumps That Are Already Known, I Want To Share, Or Shit I Dont Need</p>
+        <hr />
+        <p><a href="https://onlinegpt.org/chat/">onlinegpt.org/chat/</a> - Chatgpt shit<p><br>
+        <p><a href="https://wowzers.netlify.app/">wowzers.netlify.app</a> - A Already known Interstellar Link, Proxies Dont Work, But Theres Games<p><br>
+        <p><a href="https://wowzers-xi.vercel.app/">wowzers-xi.vercel.app</a> - Another Interstellar Wowzers Shit, But the proxies work this time (Proxy Backend Hosted By ProjectSkye)</p><br>
+        <hr />
+        </p>By Yours Truely</p>
+         <hr />
+        <p class="date">Sent On 10/27/2023, 8:26:14 AM. </p>
+      </article>
+ 
+    
+            </main>
+            <footer>
+            </footer>
+          </body>
+        </html>
+
+
+<script>
+// When the user clicks on div, open the popup
+function myFunction() {
+var popup = document.getElementById("myPopup");
+popup.classList.toggle("show");
+}
+</script>
+
+</body>
+</html>
+
+        

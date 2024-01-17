@@ -1,0 +1,231 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(45deg, #ff00cc, #3333cc, #ff00cc); /* Initial gradient background */
+      background-size: 400% 400%; /* Larger size for smooth animation */
+      animation: gradientAnimation 10s infinite alternate; /* Gradient animation */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      transition: background 0.5s ease; /* Smooth background transition */
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    form {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid #333;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      width: 80%;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: linear-gradient(to right, #ff00cc, #3333cc);
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <h1>Purchase Form</h1>
+    <h3>Select Product and Provide Details</h3>
+    <p>Spamming/Trolling Will Lead To Immediate Cancelation</p>
+  </center>
+  <form id="purchaseForm">
+    <label>
+      Select Product:
+      <select name="product" required>
+        <option value="custom_skye">Custom Skye</option>
+      </select>
+    </label>
+    <label>
+      Your Name:
+      <input type="text" name="name" required>
+    </label>
+    <label>
+      Password For Site
+      <input type="url" name="site_url" required>
+    </label>
+    <label>
+      Site URL: (your own name).netlify.app
+      <input type="text" name="pass" required>
+    </label>
+    <label>
+      Custom Apps (Free):
+      <select name="custom_apps">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+    </label>
+    <div id="appLinks" style="display: none;">
+      <label>
+        Add Links/Names Of Apps:
+        <input type="text" name="app_links">
+      </label>
+    </div>
+    <label>
+      Private Proxy Server (1 Dollar Extra):
+      <select name="private_server">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+    </label>
+    <label>
+      Payment Method:
+      <select name="payment_method" required>
+        <option value="cash">Cash</option>
+      </select>
+    </label>
+    <p>Total: $<span id="totalAmount">3(Actual Price Will Show Up On Submition)</span></p>
+    <button type="button" onclick="submitPurchase()">Submit Purchase</button>
+  </form>
+
+  <script>
+    let isSubmitting = false;
+
+    function submitPurchase() {
+      if (isSubmitting) {
+        alert('The Purchase Form has been disabled temporarily.');
+        return;
+      }
+
+      // Get form data
+      const form = document.getElementById('purchaseForm');
+      const formData = new FormData(form);
+
+      // Disable submit button
+      const submitButton = document.querySelector('button');
+      submitButton.disabled = true;
+
+      // Set cooldown timeout
+      setTimeout(() => {
+        submitButton.disabled = false;
+        isSubmitting = false;
+      }, 30000); // 30 seconds cooldown
+
+      // Calculate total amount based on private server selection
+      const totalAmount = formData.get('private_server') === 'yes' ? 4 : 3;
+
+      // Generate 5-digit ID
+      const purchaseId = Math.floor(00000 + Math.random() * 90000);
+
+      // Create payload for Discord webhook
+      const payload = {
+        content: null,
+        embeds: [
+          {
+            title: "New Purchase Pending !!",
+            color: 727954,
+            fields: [
+              {
+                name: `From ${formData.get('name')}`,
+                value: `Product: ${formData.get('product')}\nSite URL: ${formData.get('site_url')}\nCustom Apps: ${formData.get('custom_apps')}\nApp Links: ${formData.get('app_links') || 'N/A'}\nPrivate Server: ${formData.get('private_server')}\nPassword: ${formData.get('pass')}\nPayment Method: ${formData.get('payment_method')}\nTotal Amount: $${totalAmount}\nPurchase ID: ${purchaseId}`
+              }
+            ],
+            author: {
+              name: "Project Skye Payment"
+            }
+          }
+        ],
+        attachments: []
+      };
+
+      // Make a POST request to Discord webhook
+      fetch('/purchaseapi', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Handle success if needed
+        console.log('Purchase submitted successfully to Discord webhook:', data);
+        alert(`Payment Pending\nYour Purchase ID: ${purchaseId}\nPlease bring $${totalAmount} in cash to the admin with this ID.`);
+        form.reset();
+        document.getElementById('appLinks').style.display = 'none';
+      })
+      .catch(error => {
+        // Handle error if needed
+        console.error('Error submitting purchase to Discord webhook:', error);
+        alert(`Payment Pending\nYour Purchase ID: ${purchaseId}\nPlease Remember Your ID bring $${totalAmount} in cash upfront to the admin with ID Info.`);
+      })
+      .finally(() => {
+        // Enable submit button
+        isSubmitting = false;
+        submitButton.disabled = false;
+      });
+    }
+
+    // Show/hide app links based on custom apps selection
+    document.querySelector('select[name="custom_apps"]').addEventListener('change', function() {
+      const appLinksDiv = document.getElementById('appLinks');
+      if (this.value === 'yes') {
+        appLinksDiv.style.display = 'block';
+      } else {
+        appLinksDiv.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
+
+

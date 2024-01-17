@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Form</title>
+    <style>
+        /* CSS to hide the form by default */
+        #urlForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form class="url" method="POST" action="/session/" id="urlForm">
+        <input name="url" id="iurl" type="text">
+        <button type="submit" id="btn">Go!</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the 'link' parameter from the query string
+            const urlParams = new URLSearchParams(window.location.search);
+            const link = urlParams.get("link");
+
+            // Set the 'link' value to the input field
+            if (link) {
+                document.getElementById("iurl").value = link;
+            }
+
+            // Automatically submit the form
+            document.getElementById("urlForm").submit();
+        });
+    </script>
+</body>
+</html>

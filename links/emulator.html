@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Skye Emulator</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #game {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id='game'></div>
+
+<script type='text/javascript'>
+    // Check if parameters are provided in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const coreParam = urlParams.get('type');
+    const gameParam = urlParams.get('game');
+
+    // Set default values
+    EJS_player = '#game';
+    EJS_core = coreParam;
+    EJS_biosUrl = '';
+    EJS_gameUrl = gameParam;
+    EJS_pathtodata = 'https://ixlmath.pages.dev/emulator/data/';
+</script>
+<script src='https://ixlmath.pages.dev/emulator/data/loader.js'></script>
+</body>
+
+</html>

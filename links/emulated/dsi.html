@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <link rel="shortcut icon" href="https://assets.clever.com/launchpad/92f70eac9/favicon.ico?1">
+<title>Clever | Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        background-color: #111;
+        color: #fff;
+        font-family: Verdana, sans-serif;
+        font-size: 16px;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0;
+      }
+      
+      h1 {
+        font-size: 2em;
+        margin-bottom: 1em;
+        text-align: center;
+      }
+      
+      #button-grid {
+        display: grid;
+        grid-gap: 1em;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        justify-items: center;
+        margin: 2em auto;
+        margin-top: 0px;
+        max-width: 1200px;
+        padding: 1em;
+      }
+      
+      .button {
+        background-color: #222;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+        transition: transform 0.2s ease-in-out;
+        width: 100%;
+        max-width: 260px;
+      }
+      
+      .button:hover {
+        transform: scale(1.1);
+      }
+      
+      .button img {
+        border-radius: 20px;
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+      }
+      
+      .button-text {
+        margin-top: 1em;
+        text-align: center;
+        color: #8c8c8c;
+      }
+      
+      .button-text h2 {
+        font-size: 1.2em;
+        margin: 0;
+      }
+      
+      .button-text p {
+        font-size: 0.8em;
+        margin: 0;
+      }
+      a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 4px 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+
+
+
+#particles-js {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1; /* Set a negative z-index to place it behind other elements */
+}
+
+    </style>
+  </head>
+  
+  <body>
+       <div id="particles-js"></div>
+    <a href="/links/Emulated">Go Back</a> <h1>NINTENDO DSi</h1> <div style="display: flex;justify-content: center;margin-top: 20px;height: 40px;width: 90%;max-width: 1168px;border-radius: 20px;border: solid 2px #8c8c8c;background-color: #222;">
+          <input placeholder="Search for Links" oninput="search(this.value);" style="width: 96%;border: none;background: none;outline: none;color: #d9d8d8;">
+      </div>
+    </div>
+    <div id="button-grid">
+    
+
+
+<script src="dsi.js"></script>        
+    </div>
+    <h1 id="noresults" style="display: none;">No Games Found</h1>
+    <div id="iframeContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 999;">
+       <iframe id="currentIframe" style="width: 100%; height: 100%;"></iframe>
+       <button onclick="hideIframe()" style="position: absolute; top: 20px; left: 20px; background-color: #01033b; color: white; padding: 10px 20px; cursor: pointer; border: none;">Go Back</button>
+   </div>
+       <script>
+         const buttons = document.querySelectorAll('.button');
+         
+         buttons.forEach(button => {
+           button.addEventListener('click', event => {
+             // Do something when button is clicked
+           });
+         });
+         function showIframe(src) {
+       const iframe = document.getElementById('currentIframe');
+       iframe.src = src;
+       document.getElementById('iframeContainer').style.display = 'block';
+   }
+   
+   function hideIframe() {
+       const iframe = document.getElementById('currentIframe');
+       iframe.removeAttribute('src'); // Remove the src attribute to stop the iframe content
+       document.getElementById('iframeContainer').style.display = 'none';
+   }
+         function search(input) {
+             var names = document.getElementsByTagName("h2");
+             var bttns = document.getElementsByTagName("button");
+           var noresults = document.getElementById("noresults");
+                   noresults.style.display = "none";
+             for (let i = 0; i < names.length; i++) { 
+                 bttns[i].style = "";
+                 var name = names[i].innerText.toLowerCase()
+                 if (name.search(input.toLowerCase()) == -1) {
+                     bttns[i].style.display = "none";
+                 }
+             }
+           for (let i = 0; i < bttns.length; i++) { 
+               if(!bttns[i].style.display) {
+               return;
+               }
+           }
+           noresults.style = "";
+         }
+       </script>
+   <script src="/particles.js"></script>
+<script src="/app.js"></script>
+     </body>
+   </html>

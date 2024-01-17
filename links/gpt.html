@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FREE GPT-4</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    #chat-container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    #chat-messages {
+      height: 300px;
+      overflow-y: auto;
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .user, .bot {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .user {
+      background-color: #e3f2fd;
+    }
+
+    .bot {
+      background-color: #c8e6c9;
+    }
+
+    #user-input {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+    }
+
+    #message-input {
+      flex: 1;
+      padding: 8px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    #submit-button {
+      padding: 8px 15px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    #wait-message {
+      color: #888;
+      font-style: italic;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body> 
+  <div id="chat-container">
+  <h1>Free GPT4</h1>
+  <div style="color: #888;
+      font-style: italic;
+      padding: 10px;
+      text-align: center;">Note: It can only accept 20 request per minute globaly</div>
+    <div id="chat-messages"></div>
+    <div id="user-input">
+      <input type="text" id="message-input" placeholder="Type your message...">
+      <button id="submit-button">Submit</button>
+    </div>
+    <div id="wait-message">Welcome To Our Free GPT-4 Page</div>
+    
+  </div>
+
+<script>
+  const apiKey = 'shuttle-6bpahwgwh42wpe5d9kgq';
+  const apiUrl = '/api/gpt4/v1';
+  const model = 'gpt-4';
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const chatMessages = document.getElementById('chat-messages');
+    const messageInput = document.getElementById('message-input');
+    const submitButton = document.getElementById('submit-button');
+    const waitMessage = document.getElementById('wait-message');
+
+    submitButton.addEventListener('click', function () {
+      const userMessage = messageInput.value;
+      if (userMessage.trim() !== '') {
+        // Display user message
+        displayMessage('user', userMessage);
+
+        // Disable input and button, show "Please wait" message
+        setChatInputState(true);
+
+        // Make API request
+        sendMessageToAPI(userMessage);
+      }
+    });
+  });
+
+  function sendMessageToAPI(message) {
+    const data = {
+      model: model,
+      messages: [{ role: 'user', content: message }]
+    };
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `${apiUrl}/chat/completions`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', `Bearer ${apiKey}`);
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          const responseData = JSON.parse(xhr.responseText).choices[0].message.content;
+          // Display API response
+          displayMessage('bot', responseData);
+
+          // Enable input and button, hide "Please wait" message, and clear input
+          setChatInputState(false);
+          messageInput.value = '';
+        } else {
+          console.error(`Error: ${xhr.status}, ${xhr.responseText}`);
+        }
+      }
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+
+  function displayMessage(role, content) {
+    const chatMessages = document.getElementById('chat-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = role;
+    messageDiv.textContent = `${role === 'user' ? 'You' : 'Bot'}: ${content}`;
+    chatMessages.appendChild(messageDiv);
+  }
+
+  function setChatInputState(disabled) {
+    const messageInput = document.getElementById('message-input');
+    const submitButton = document.getElementById('submit-button');
+    const waitMessage = document.getElementById('wait-message');
+
+    messageInput.disabled = disabled;
+    submitButton.disabled = disabled;
+
+    if (disabled) {
+      waitMessage.textContent = 'Please wait for Bot to respond...';
+    } else {
+      waitMessage.textContent = '';
+      messageInput.focus();
+    }
+  }
+</script>
+
+</body>
+</html>
